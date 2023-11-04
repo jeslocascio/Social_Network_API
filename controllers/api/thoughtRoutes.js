@@ -1,7 +1,9 @@
+// Import necessary modules
 const router = require('express').Router();
 const { User, Thought } = require('../../models');
 const mongoose = require('mongoose');
 
+// Route to get all thoughts
 router.get('/', async (req, res) => {
     try {
         const thoughtData = await Thought.find();
@@ -11,6 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Route to get a thought by its ID
 router.get('/:thoughtId', async (req, res) => {
     try {
         const thoughtData = await Thought.findOne({ _id: req.params.thoughtId });
@@ -20,6 +23,7 @@ router.get('/:thoughtId', async (req, res) => {
     }
 });
 
+// Route to create a new thought
 router.post('/', async (req, res) => {
     try {
         const thoughtData = await Thought.create(req.body);
@@ -34,6 +38,7 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Route to update a thought by its ID
 router.put('/:thoughtId', async (req, res) => {
     try {
         const thoughtData = await Thought.findOneAndUpdate(
@@ -47,6 +52,7 @@ router.put('/:thoughtId', async (req, res) => {
     }
 });
 
+// Route to delete a thought by its ID
 router.delete('/:thoughtId', async (req, res) => {
     try {
         const thoughtData = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
@@ -56,6 +62,7 @@ router.delete('/:thoughtId', async (req, res) => {
     }
 });
 
+// Route to add a reaction to a thought
 router.post('/:thoughtId/reactions', async (req, res) => {
     try {
         const thoughtData = await Thought.findOneAndUpdate(
@@ -69,9 +76,10 @@ router.post('/:thoughtId/reactions', async (req, res) => {
     }
 });
 
+// Route to remove a reaction from a thought
 router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
     try {
-        const thoughtData = await Thought.findOneAndDelete(
+        const thoughtData = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $pull: { reactions: { reactionId: req.params.reactionId } } },
             { new: true }
@@ -82,4 +90,5 @@ router.delete('/:thoughtId/reactions/:reactionId', async (req, res) => {
     }
 });
 
+// Export the router
 module.exports = router;

@@ -1,6 +1,8 @@
+// Import necessary modules
 const router = require('express').Router();
 const { User, Thought } = require('../../models');
 
+// Route to get all users
 router.get('/', async (req, res) => {
     try {
         const userData = await User.find();
@@ -10,6 +12,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Route to get a user by its ID
 router.get('/:userId', async (req, res) => {
     try {
         const userData = await User.findOne({ _id: req.params.userId });
@@ -19,6 +22,7 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
+// Route to create a new user
 router.post('/', async (req, res) => {
     try {
         const userData = await User.create(req.body);
@@ -28,6 +32,7 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Route to update a user by its ID
 router.put('/:userId', async (req, res) => {
     try {
         const userData = await User.findOneAndUpdate(
@@ -41,6 +46,7 @@ router.put('/:userId', async (req, res) => {
     }
 });
 
+// Route to delete a user by its ID
 router.delete('/:userId', async (req, res) => {
     try {
         const userData = await User.findOneAndDelete({ _id: req.params.userId });
@@ -50,6 +56,7 @@ router.delete('/:userId', async (req, res) => {
     }
 });
 
+// Route to add a friend to a user
 router.post('/:userId/friends/:friendId', async (req, res) => {
     try {
         const userData = await User.findOneAndUpdate(
@@ -63,6 +70,7 @@ router.post('/:userId/friends/:friendId', async (req, res) => {
     }
 });
 
+// Route to remove a friend from a user
 router.delete('/:userId/friends/:friendId', async (req, res) => {
     try {
         const userData = await User.findOneAndUpdate(
@@ -76,4 +84,5 @@ router.delete('/:userId/friends/:friendId', async (req, res) => {
     }
 });
 
+// Export the router
 module.exports = router;
